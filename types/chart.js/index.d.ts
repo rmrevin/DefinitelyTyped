@@ -52,7 +52,7 @@ declare class Chart {
     getElementsAtEvent: (e: any) => Array<{}>;
     getElementsAtXAxis: (e: any) => Array<{}>;
     getDatasetAtEvent: (e: any) => Array<{}>;
-    getDatasetMeta: (index: number) => Meta;
+    getDatasetMeta: (index: number) => Chart.Meta;
     getVisibleDatasetCount: () => number;
     isDatasetVisible: (datasetIndex: number) => boolean;
     setDatasetVisibility: (datasetIndex: number, visible: boolean) => void;
@@ -101,59 +101,6 @@ declare class PluginServiceStatic {
     unregister(plugin: Chart.PluginServiceGlobalRegistration & Chart.PluginServiceRegistrationOptions): void;
 }
 
-interface Meta {
-    type: Chart.ChartType;
-    data: MetaData[];
-    dataset?: Chart.ChartDataSets;
-    controller: { [key: string]: any; };
-    hidden?: boolean;
-    total?: string;
-    xAxisID?: string;
-    yAxisID?: string;
-    "$filler"?: { [key: string]: any; };
-}
-
-interface MetaData {
-    _chart: Chart;
-    _datasetIndex: number;
-    _index: number;
-    _model: Model;
-    _start?: any;
-    _view: Model;
-    _xScale: Chart.ChartScales;
-    _yScale: Chart.ChartScales;
-    hidden?: boolean;
-}
-
-// NOTE: This model is generic with a bunch of optional properties to represent all types of chart models.
-// Each chart type defines their own unique model structure so some of these optional properties
-// might always have values depending on the chart type.
-interface Model {
-    backgroundColor: string;
-    borderAlign?: Chart.BorderAlignment;
-    borderColor: string;
-    borderWidth?: number;
-    circumference?: number;
-    controlPointNextX: number;
-    controlPointNextY: number;
-    controlPointPreviousX: number;
-    controlPointPreviousY: number;
-    endAngle?: number;
-    hitRadius: number;
-    innerRadius?: number;
-    outerRadius?: number;
-    pointStyle: string;
-    radius: string;
-    skip?: boolean;
-    startAngle?: number;
-    steppedLine?: undefined;
-    tension: number;
-    x: number;
-    y: number;
-    base: number;
-    head: number;
-}
-
 declare namespace Chart {
     type ChartType = 'line' | 'bar' | 'horizontalBar' | 'radar' | 'doughnut' | 'polarArea' | 'bubble' | 'pie' | 'scatter';
 
@@ -164,6 +111,59 @@ declare namespace Chart {
     type PointStyle = 'circle' | 'cross' | 'crossRot' | 'dash' | 'line' | 'rect' | 'rectRounded' | 'rectRot' | 'star' | 'triangle';
 
     type PositionType = 'left' | 'right' | 'top' | 'bottom' | 'chartArea';
+
+    interface Meta {
+        type: Chart.ChartType;
+        data: MetaData[];
+        dataset?: Chart.ChartDataSets;
+        controller: { [key: string]: any; };
+        hidden?: boolean;
+        total?: string;
+        xAxisID?: string;
+        yAxisID?: string;
+        "$filler"?: { [key: string]: any; };
+    }
+
+    interface MetaData {
+        _chart: Chart;
+        _datasetIndex: number;
+        _index: number;
+        _model: Chart.Model;
+        _start?: any;
+        _view: Chart.Model;
+        _xScale: Chart.ChartScales;
+        _yScale: Chart.ChartScales;
+        hidden?: boolean;
+    }
+
+    // NOTE: This model is generic with a bunch of optional properties to represent all types of chart models.
+    // Each chart type defines their own unique model structure so some of these optional properties
+    // might always have values depending on the chart type.
+    interface Model {
+        backgroundColor: string;
+        borderAlign?: Chart.BorderAlignment;
+        borderColor: string;
+        borderWidth?: number;
+        circumference?: number;
+        controlPointNextX: number;
+        controlPointNextY: number;
+        controlPointPreviousX: number;
+        controlPointPreviousY: number;
+        endAngle?: number;
+        hitRadius: number;
+        innerRadius?: number;
+        outerRadius?: number;
+        pointStyle: string;
+        radius: string;
+        skip?: boolean;
+        startAngle?: number;
+        steppedLine?: undefined;
+        tension: number;
+        x: number;
+        y: number;
+        base: number;
+        head: number;
+    }
 
     // Allow extending the IteractionMode type alias
     // see https://github.com/microsoft/TypeScript/issues/28078#issuecomment-432339564
